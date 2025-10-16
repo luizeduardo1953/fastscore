@@ -3,12 +3,13 @@
 import { User, Lock, Mail, Smartphone } from "lucide-react";
 import { useState } from "react";
 
+import { signUp } from "@/lib/actions/auth-actions";
+
 
 export default function FormRegister() {
 
     const [formData, setFormData] = useState({
-        username: "",
-        telefone: "",
+        name: "",
         email: "",
         password: ""
     })
@@ -20,14 +21,20 @@ export default function FormRegister() {
         })
     }
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         console.log(formData);
 
-        if (!formData.username || !formData.email || !formData.password) {
-            alert("Por favor, preencha todos os campos.");
-            return;
+        try {
+            const result = await signUp(formData.email, formData.password, formData.name);
+
+            if (result) {
+                alert("Usuário cadastrado com sucesso!");
+            }
+        } catch (error) {
+            alert("Erro ao cadastrar usuário");
         }
+
 
     }
 
@@ -41,16 +48,16 @@ export default function FormRegister() {
 
                 {/* Usuário */}
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="username" className="text-sm font-medium text-gray-200 ml-1">
+                    <label htmlFor="name" className="text-sm font-medium text-gray-200 ml-1">
                         Usuário
                     </label>
                     <div className="relative">
                         <User className="absolute left-3 top-3 text-gray-400" size={18} />
                         <input
                             type="text"
-                            id="username"
-                            name="username"
-                            value={formData.username}
+                            id="name"
+                            name="name"
+                            value={formData.name}
                             onChange={handleChange}
                             placeholder="Digite seu usuário"
                             required
@@ -59,25 +66,6 @@ export default function FormRegister() {
                     </div>
                 </div>
 
-                {/* Telefone */}
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="telefone" className="text-sm font-medium text-gray-200 ml-1">
-                        Telefone
-                    </label>
-                    <div className="relative">
-                        <Smartphone className="absolute left-3 top-4 text-gray-400" size={18} />
-                        <input
-                            type="tel"
-                            id="telefone"
-                            name="telefone"
-                            value={formData.telefone}
-                            onChange={handleChange}
-                            placeholder="Digite seu telefone"
-                            maxLength={15}
-                            className="w-full pl-10 pr-4 py-3 bg-white/20 border border-gray-400/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#70d9ce] focus:border-transparent transition-all duration-200"
-                        />
-                    </div>
-                </div>
 
                 {/* Email */}
                 <div className="flex flex-col gap-2">
@@ -134,7 +122,7 @@ export default function FormRegister() {
                 <div className="text-center mt-4">
                     <p className="text-gray-300">
                         Já possui uma conta?{" "}
-                        <a href="/login" className="text-[#70d9ce] hover:text-white font-medium transition-colors">
+                        <a href="/sign-in" className="text-[#70d9ce] hover:text-white font-medium transition-colors">
                             Entrar
                         </a>
                     </p>

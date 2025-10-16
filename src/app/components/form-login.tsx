@@ -1,7 +1,16 @@
+'use client'
+
 import { User, Lock } from "lucide-react";
+import React from "react";
+import { useState } from "react";
 
 export default function FormLogin() {
 
+    const handleSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        // Lógica de autenticação aqui
+        console.log("Formulário de login enviado");
+    }
 
     return (
         <>
@@ -72,7 +81,7 @@ export default function FormLogin() {
                 <div className="text-center mt-4">
                     <p className="text-gray-300">
                         Não tem uma conta?{" "}
-                        <a href="/register" className="text-[#70d9ce] hover:text-white font-medium transition-colors">
+                        <a href="/sign-up" className="text-[#70d9ce] hover:text-white font-medium transition-colors">
                             Cadastre-se
                         </a>
                     </p>
