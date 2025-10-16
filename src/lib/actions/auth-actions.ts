@@ -9,7 +9,7 @@ export const signUp = async (email: string, password: string, name: string) => {
             email,
             password,
             name,
-            callbackURL: `${process.env.NEXTAUTH_URL}/dashboard`,
+            callbackURL: `${process.env.NEXTAUTH_URL}/sign-in`,
         },
     });
 
