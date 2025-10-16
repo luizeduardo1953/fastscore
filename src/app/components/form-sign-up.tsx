@@ -30,6 +30,7 @@ export default function FormRegister() {
 
             if (result) {
                 alert("Usuário cadastrado com sucesso!");
+                window.location.href = "/sign-in";
             }
         } catch (error) {
             alert("Erro ao cadastrar usuário");

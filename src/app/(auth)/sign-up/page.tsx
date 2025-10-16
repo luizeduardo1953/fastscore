@@ -1,5 +1,5 @@
 import Image from "next/image";
-import FormRegister from "@/app/components/form-register";
+import FormRegister from "@/app/components/form-sign-up";
 import FooterLogin from "@/app/components/footer-login";
 
 export default function signUp() {

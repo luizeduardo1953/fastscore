@@ -1,5 +1,5 @@
 import FooterLogin from "@/app/components/footer-login";
-import FormLogin from "@/app/components/form-login";
+import FormLogin from "@/app/components/form-sign-in";
 import Image from "next/image";
 
 export default function signIn() {
