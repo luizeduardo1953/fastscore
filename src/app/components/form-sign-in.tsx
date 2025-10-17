@@ -3,19 +3,42 @@
 import { User, Lock } from "lucide-react";
 import React from "react";
 import { useState } from "react";
+import { signIn } from "@/lib/actions/auth-actions";
 
 export default function FormLogin() {
 
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        // Lógica de autenticação aqui
-        console.log("Formulário de login enviado");
+    const [formData, setFormData] = useState({
+        username: "",
+        password: ""
+    });
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({
+            ...formData,
+            [event.target.name]: event.target.value
+        });
     }
+
+        const handleSubmit = async (event: React.FormEvent) => {
+            event.preventDefault();
+            try {
+                const result = await signIn(formData.username, formData.password);
+
+                if (result) {
+                    alert("Login realizado com sucesso!");
+                    window.location.href = "/dashboard";
+                }
+
+            } catch (error) {
+                alert("Erro ao realizar login");
+            }
+        }
+
 
     return (
         <>
             {/* Card do formulário */}
-            <form className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl shadow-2xl flex flex-col gap-6 w-full max-w-md mx-4 z-10">
+            <form onSubmit={handleSubmit} className="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-2xl shadow-2xl flex flex-col gap-6 w-full max-w-md mx-4 z-10">
                 <div className="text-center mb-2">
                     <h2 className="text-3xl font-semibold text-white">Login</h2>
                     <p className="text-gray-300 mt-2">Acesse sua conta para continuar</p>
@@ -31,6 +54,9 @@ export default function FormLogin() {
                         <input
                             type="text"
                             id="username"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
                             autoComplete="off"
                             placeholder="Digite seu usuário"
                             className="w-full pl-10 pr-4 py-3 bg-white/20 border border-gray-400/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#70d9ce] focus:border-transparent transition-all duration-200"
@@ -48,6 +74,9 @@ export default function FormLogin() {
                         <input
                             type="password"
                             id="password"
+                            name="password"
+                            value={formData.password}
+                            onChange={handleChange}
                             autoComplete="off"
                             placeholder="Digite sua senha"
                             className="w-full pl-10 pr-4 py-3 bg-white/20 border border-gray-400/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#70d9ce] focus:border-transparent transition-all duration-200"

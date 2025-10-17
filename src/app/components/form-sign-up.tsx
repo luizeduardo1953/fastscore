@@ -2,7 +2,6 @@
 
 import { User, Lock, Mail, Smartphone } from "lucide-react";
 import { useState } from "react";
-
 import { signUp } from "@/lib/actions/auth-actions";
 
 
@@ -23,7 +22,6 @@ export default function FormRegister() {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        console.log(formData);
 
         try {
             const result = await signUp(formData.email, formData.password, formData.name);
@@ -35,8 +33,6 @@ export default function FormRegister() {
         } catch (error) {
             alert("Erro ao cadastrar usuário");
         }
-
-
     }
 
     return (
